@@ -17,7 +17,9 @@ const userSchema = new mongoose.Schema({
         required: 'Password is mandatory'
     },
     profilePic: {
-        type: String
+        type: String,
+        required: true,
+        default: 'https://png2.kisspng.com/20180508/ozq/kisspng-user-computer-icons-system-chinese-wind-title-column-5af1427fd3ab48.378455571525760639867.png'
     },
     runAways: Number,
     personalHate: [{
