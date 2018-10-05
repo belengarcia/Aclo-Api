@@ -16,29 +16,18 @@ module.exports.create = (req, res, next) => {
         .catch(error => next(error))
 }
 
+//¡¡PORBAR!!
+module.exports.delete = (req, res, next) => {
+    console.log(req.params);
+    userDestiny.findOneAndDelete({_id: req.params.id_userDestiny})
+        .then(userDest => {
+            if(!userDest){
+                throw createError(404, 'Destiny not found');
+            } else {
+                res.status(204).json();
+            }
+        })
+        .catch(error => next(error));
+}
 
-// NO HACEN FALTA:
-// module.exports.get = (req, res, next) => {
-//     userDestiny.findById(req.params.id)
-//         .then(destiny => {
-//             if(!destiny){
-//                 throw createError(404, 'Destiny not found')
-//             } else {
-//                 res.json(destiny)
-//             }
-//         })
-//         .catch(error => next(error))
-// }
 
-
-// module.exports.delete = (req, res, next) => {
-//     userDestiny.findOneAndDelete({_id: req.params.id})
-//         .then(destiny => {
-//             if(!destiny){
-//                 throw createError(404, 'Destiny not found');
-//             } else {
-//                 res.status(204).json();
-//             }
-//         })
-//         .catch(error => next(error));
-// }
