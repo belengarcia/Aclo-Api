@@ -40,3 +40,21 @@ module.exports.delete = (req, res, next) => {
         })
         .catch(error => next(error));
 }
+
+module.exports.update = (req, res, next) => {
+    changes = {
+        name: req.body.name,
+        img: req.body.img,
+        description: req.body.description
+    }
+
+    Destiny.findByIdAndUpdate(req.params.id, {$set: changes}, { new: true, runValidators: true })
+        .then(destiny => {
+            if(!destiny) {
+                throw createError(404, 'Destiny not found')
+            } else {
+                res.json(destiny)
+            }
+        })
+        .catch(error => next(error));
+}

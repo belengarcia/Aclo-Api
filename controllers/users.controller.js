@@ -40,3 +40,33 @@ module.exports.delete = (req, res, next) => {
         })
         .catch(error => next(error));
 }
+
+module.exports.get = (req, res, next) => {
+    User.findById(req.params.id)
+        .then(user => {
+            if(!user){
+                throw createError(404, 'User not found');
+            } else {
+                res.json(user)
+            }
+        })
+        .catch(error => next(error))
+}
+
+module.exports.update = (req, res, next) => {
+    changes = {
+        name: req.body.name,
+        profilePic: req.body.profilePic,
+        //role: req.body.role,
+        mail: req.body.mail
+    }
+    User.findByIdAndUpdate(req.params.id, {$set : changes}, { new: true, runValidators: true })
+        .then(user => {
+            if(!user) {
+                throw createError(404, 'User not found')
+            } else {
+                res.json(user)
+            }
+        })
+        .catch(error => next(error))
+}
