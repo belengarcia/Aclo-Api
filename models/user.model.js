@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const constants = require('../constants');
 const bcrypt = require('bcrypt')
 const SALT_WORK_FACTOR = 10;
 
@@ -25,7 +26,12 @@ const userSchema = new mongoose.Schema({
     personalHate: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
-    }]
+    }],
+    role: {
+        type: String,
+        enum: [constants.ROLE_USER, constants.ROLE_ADMIN],
+        default: constants.ROLE_USER
+    }
 }, {timestamps: true,     
     toJSON: {
     transform: (doc, ret) => {
