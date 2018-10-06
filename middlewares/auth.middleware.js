@@ -31,3 +31,13 @@ module.exports.isMe = (param = 'id') => {
       }
     }
   }
+
+module.exports.meOrAdmin = (req, res, next) => {
+
+    if(req.user._id.toString() === req.params.id || req.user.role === 'admin'){
+      console.log('entras?')
+      next()
+    } else {
+      throw createError(401)
+    }
+  }

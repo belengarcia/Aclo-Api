@@ -3,6 +3,7 @@ const User = require('../models/user.model');
 const createError = require('http-errors');
 
 module.exports.create = (req, res, next) => {
+
     User.findOne({ mail: req.body.mail })
         .then(user => {
             if (user) {
@@ -57,9 +58,13 @@ module.exports.update = (req, res, next) => {
     changes = {
         name: req.body.name,
         profilePic: req.body.profilePic,
-        //role: req.body.role,
         mail: req.body.mail
     }
+
+    if (req.user.role === 'admin') {
+        changes.role = req.body.role
+    }
+
     User.findByIdAndUpdate(req.params.id, {$set : changes}, { new: true, runValidators: true })
         .then(user => {
             if(!user) {
@@ -69,4 +74,20 @@ module.exports.update = (req, res, next) => {
             }
         })
         .catch(error => next(error))
+}
+
+module.exports.updateRole = (req, res, next) => {
+    changeRole = {
+        role: req.body.role
+    }
+
+    User.findByIdAndUpdate(req.params.id, {$set : changeRole}, { new: true, runValidators: true })
+    .then(user => {
+        if(!user) {
+            throw createError(404, 'User not found')
+        } else {
+            res.json(user)
+        }
+    })
+    .catch(error => next(error))
 }

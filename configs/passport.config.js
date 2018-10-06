@@ -5,7 +5,6 @@ const createError = require('http-errors');
 module.exports.setup = (passport) => {
     
     passport.serializeUser((user, next) => {
-        console.log(user);
         next(null, user._id);
       });
     
@@ -21,7 +20,6 @@ module.exports.setup = (passport) => {
     }, (mail, password, next) => {
         User.findOne({ mail: mail})
             .then(user => {
-                debugger;
                 if(!user) {
                     throw createError(401, 'Invalid email or password?');
                 } else {
