@@ -24,6 +24,10 @@ module.exports.create = (req, res, next) => {
     //averiguar cómo pasar el req.body!!
     const destiny = new Destiny(req.body);
 
+    if(req.files){
+        destiny.img = `${req.protocol}://${req.get('host')}/uploads/${file.filename}`
+    }
+
     destiny.save()
         .then(destiny => res.status(201).json(destiny))
         .catch(error => next(error));

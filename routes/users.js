@@ -10,7 +10,6 @@ router.get('/', auth.isAuthenticated, auth.checkRole(constants.ROLE_ADMIN), user
 router.get('/:id', auth.isAuthenticated, userController.get)
 router.delete('/:id', auth.isAuthenticated, auth.checkRole(constants.ROLE_ADMIN), userController.delete); //solo admin
 router.put('/:id/update', auth.isAuthenticated, auth.meOrAdmin, userController.update)
-router.put('/:id/update', auth.isAuthenticated, auth.checkRole(constants.ROLE_ADMIN), userController.updateRole)
 
 router.get('/:id/myDestinies', auth.isAuthenticated, userDestController.list); 
 router.post('/:id/myDestinies', auth.isAuthenticated, userDestController.create);

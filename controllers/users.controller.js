@@ -44,6 +44,7 @@ module.exports.delete = (req, res, next) => {
 
 module.exports.get = (req, res, next) => {
     User.findById(req.params.id)
+        .populate('personalHate')
         .then(user => {
             if(!user){
                 throw createError(404, 'User not found');
@@ -74,20 +75,4 @@ module.exports.update = (req, res, next) => {
             }
         })
         .catch(error => next(error))
-}
-
-module.exports.updateRole = (req, res, next) => {
-    changeRole = {
-        role: req.body.role
-    }
-
-    User.findByIdAndUpdate(req.params.id, {$set : changeRole}, { new: true, runValidators: true })
-    .then(user => {
-        if(!user) {
-            throw createError(404, 'User not found')
-        } else {
-            res.json(user)
-        }
-    })
-    .catch(error => next(error))
 }
