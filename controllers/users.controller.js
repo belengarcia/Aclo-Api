@@ -62,6 +62,10 @@ module.exports.update = (req, res, next) => {
         mail: req.body.mail
     }
 
+    if(req.files){
+        changes.profilePic = `${req.protocol}://${req.get('host')}/uploads/${file.filename}`
+    }
+
     if (req.user.role === 'admin') {
         changes.role = req.body.role
     }
@@ -76,3 +80,4 @@ module.exports.update = (req, res, next) => {
         })
         .catch(error => next(error))
 }
+
