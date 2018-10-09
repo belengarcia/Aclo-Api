@@ -32,6 +32,7 @@ module.exports.list = (req, res, next) => {
 
 module.exports.delete = (req, res, next) => {
     User.findByIdAndDelete(req.params.id) //user?
+    console.log(req.params)
         .then(user => {
             if (!user) {
                 throw createError(404, 'User not found');
