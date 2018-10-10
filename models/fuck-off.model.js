@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
 
-const userDestinySchema = new mongoose.Schema({
-    userId: {
+const fuckOffSchema = new mongoose.Schema({
+    from: String,
+    to: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    destinyId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Destiny'
-    }
+    message: String
+
 }, {timestamps: true,     
     toJSON: {
     transform: (doc, ret) => {
@@ -20,5 +19,5 @@ const userDestinySchema = new mongoose.Schema({
     }   
 });
 
-const userDestiny = mongoose.model('userDestiny', userDestinySchema);
-module.exports = userDestiny;
+const fuckOff = mongoose.model('fuck-off', fuckOffSchema);
+module.exports = fuckOff;

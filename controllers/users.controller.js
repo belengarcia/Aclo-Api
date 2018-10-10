@@ -45,7 +45,6 @@ module.exports.delete = (req, res, next) => {
 
 module.exports.get = (req, res, next) => {
     User.findById(req.params.id)
-        .populate('personalHate')
         .then(user => {
             if(!user){
                 throw createError(404, 'User not found');

@@ -14,6 +14,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const destinyRouter = require('./routes/destiny');
 const sessionRouter = require('./routes/sessions');
+const fuckOffRouter = require('./routes/fuck-off');
 
 
 require('./configs/db.configs');
@@ -45,6 +46,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/sessions', sessionRouter);
 app.use('/destiny', destinyRouter);
+app.use('/users/:id/fuck-offs', fuckOffRouter);
 
 app.use(function(req, res, next) {
   next(createError(404));

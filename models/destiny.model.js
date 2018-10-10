@@ -25,7 +25,6 @@ const destinySchema = new mongoose.Schema({
         ret.id = doc._id;
         delete ret._id;
         delete ret.__v;
-        delete ret.password;
         return ret;
         }   
     }   
