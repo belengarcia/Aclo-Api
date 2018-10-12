@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-
+//esto va a Fuck off como objeto anidado
+// transformar las coordenadas en el JSON
 const destinySchema = new mongoose.Schema({
     name: {
         type: String,

@@ -7,7 +7,6 @@ const fuckOffSchema = new mongoose.Schema({
         ref: 'User'
     },
     message: String
-
 }, {timestamps: true,     
     toJSON: {
     transform: (doc, ret) => {
@@ -19,5 +18,5 @@ const fuckOffSchema = new mongoose.Schema({
     }   
 });
 
-const fuckOff = mongoose.model('fuck-off', fuckOffSchema);
-module.exports = fuckOff;
+const FuckOff = mongoose.model('FuckOff', fuckOffSchema);
+module.exports = FuckOff;

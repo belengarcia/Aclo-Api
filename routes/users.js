@@ -6,10 +6,10 @@ const auth = require('../middlewares/auth.middleware');
 const constants = require('../constants');
 
 router.post('/', userController.create);
-router.get('/', auth.isAuthenticated, auth.checkRole(constants.ROLE_ADMIN), userController.list);   //solo admin
+router.get('/', auth.isAuthenticated, userController.list);   //todos
 router.get('/:id', auth.isAuthenticated, userController.get)
 router.delete('/:id', auth.isAuthenticated, auth.checkRole(constants.ROLE_ADMIN), userController.delete); //solo admin
-router.put('/:id/update', auth.isAuthenticated, auth.meOrAdmin, userController.update)
+router.put('/:id/update', auth.isAuthenticated, auth.meOrAdmin, userController.update) //me or admin
 
 
 router.get('/:id/myDestinies', auth.isAuthenticated, userDestController.list); 
