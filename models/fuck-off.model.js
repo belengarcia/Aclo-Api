@@ -6,8 +6,13 @@ const fuckOffSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    message: String
-}, {timestamps: true,     
+    message: String,
+    fav: false,
+    destiny: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Destiny'
+    }
+    }, {timestamps: true,     
     toJSON: {
     transform: (doc, ret) => {
         ret.id = doc._id;
@@ -15,7 +20,7 @@ const fuckOffSchema = new mongoose.Schema({
         delete ret.__v;
         return ret;
         }   
-    }   
+    }
 });
 
 const FuckOff = mongoose.model('FuckOff', fuckOffSchema);

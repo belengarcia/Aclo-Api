@@ -24,6 +24,8 @@ const destinySchema = new mongoose.Schema({
     toJSON: {
     transform: (doc, ret) => {
         ret.id = doc._id;
+        ret.coordinates = doc.location.coordinates
+        delete ret.location;
         delete ret._id;
         delete ret.__v;
         return ret;
