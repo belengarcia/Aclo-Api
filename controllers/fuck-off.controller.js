@@ -1,6 +1,9 @@
 const fuckOffs = require('../models/fuck-off.model');
+const destiny = require('../models/destiny.model');
 const mongoose = require('mongoose');
 const createError = require('http-errors');
+const googleApi = require('../googleApi')
+const address = require('../googleApi')
 
 module.exports.list = (req, res, next) => {
     fuckOffs.find( { $or: [
@@ -30,18 +33,29 @@ module.exports.list = (req, res, next) => {
 //         .catch(error => next(error));
 // }
 
-//aqui creo el random
-//paso el random con el api y el api de google y lo transformo a mi model de destiny
-
 module.exports.create = (req, res, next) => {
-    const newData = new fuckOffs({
-        from: req.user.id,
-        to: req.params.id,
-        message: req.body.message
+
+    address;
+    console.log(address);
+
+    const destinyData = new destiny({
+        //aquí la información que cogí del api de Google
     })
-    
-    newData.save()
-        .then(data => res.status(201).json(data))
-        .catch(error => next(error));
 }
 
+    // destinyData.save()
+    //     .then(
+    //         destiny => {
+    //             res.status(201).json(destiny)
+    //             const newData = new fuckOffs({
+    //                 from: req.user.id,
+    //                 to: req.params.id,
+    //                 message: req.body.message,
+    //                 destiny: destiny.id
+    //             })
+    //             newData.save()
+    //                 .then(data => res.status(201).json(data))
+    //                 .catch(error => next(error)); //me hace falta este catch?
+    //         }
+    //     )
+    //     .catch(error => next(error));

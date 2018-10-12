@@ -11,11 +11,29 @@ const fuckOffSchema = new mongoose.Schema({
     destiny: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Destiny'
+    },
+    destiny: {
+        name: String,
+        img: String,
+        description: String,
+        location: {
+            type: {
+                type: String,
+                enum: ['Point'],
+                required: true
+            },
+            coordinates: {
+                type: [Number],
+                required: true
+            }
+        }
     }
     }, {timestamps: true,     
     toJSON: {
     transform: (doc, ret) => {
         ret.id = doc._id;
+        ret.destiny.coordinates = doc.destiny.location.coordinates;
+        delete ret.destiny.location;
         delete ret._id;
         delete ret.__v;
         return ret;
@@ -25,3 +43,4 @@ const fuckOffSchema = new mongoose.Schema({
 
 const FuckOff = mongoose.model('FuckOff', fuckOffSchema);
 module.exports = FuckOff;
+
