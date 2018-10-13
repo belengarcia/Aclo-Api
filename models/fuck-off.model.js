@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 
 const fuckOffSchema = new mongoose.Schema({
-    from: String,
+    from: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
     to: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'

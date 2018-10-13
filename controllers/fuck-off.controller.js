@@ -10,6 +10,8 @@ module.exports.list = (req, res, next) => {
             { from : req.params.id },
             { to : req.params.id }
         ]})
+        // .populate('from')
+        // .populate('to')
         .then(data => {
             res.json(data)
         })
@@ -24,7 +26,7 @@ module.exports.create = (req, res, next) => {
             console.info('(> O.;..;.O)>     ')
             finalDestiny = new fuckOffs({
                 from: req.user.id,
-                to: req.body.id,
+                to: req.params.id,
                 message: req.body.message,
                 destiny: {
                     name: myDestiny.name,
@@ -40,9 +42,5 @@ module.exports.create = (req, res, next) => {
             .then(data => res.status(201).json(data))
             .catch(error => next(error));
         })
-        .catch(err => console.error(err))
-
-
-
-    
+        .catch(err => console.error(err))    
 }
