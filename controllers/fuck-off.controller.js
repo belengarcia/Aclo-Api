@@ -2,7 +2,7 @@ const fuckOffs = require('../models/fuck-off.model');
 const destiny = require('../models/destiny.model');
 const mongoose = require('mongoose');
 const createError = require('http-errors');
-const googleApi = require('../googleApi')
+const googleApi = require('../services/google-api')
 const axios = require('axios')
 
 module.exports.list = (req, res, next) => {
@@ -18,45 +18,31 @@ module.exports.list = (req, res, next) => {
 
 
 module.exports.create = (req, res, next) => {
+    let finalDestiny = {};
     googleApi.generateAddress()
-   .then((data) => {
-       console.log('data', data)
-       return res.json(data).status(200);
-   })
-   .catch(err => console.error(err))
+        .then((myDestiny) => {
+            console.info('(> O.;..;.O)>     ')
+            finalDestiny = new fuckOffs({
+                from: req.user.id,
+                to: req.body.id,
+                message: req.body.message,
+                destiny: {
+                    name: myDestiny.name,
+                    img: myDestiny.image,
+                    placeId: myDestiny.placeId,
+                    location: {
+                        coordinates: Object.values(myDestiny.coordinates)
+                    }
+                }
+            })
+
+            finalDestiny.save()
+            .then(data => res.status(201).json(data))
+            .catch(error => next(error));
+        })
+        .catch(err => console.error(err))
+
+
+
+    
 }
-
-
-
-// module.exports.create = (req, res, next) => {
-//     const cords = [Math.random(), Math.random()];
-//     googleApi.destiny(cords)
-//         .then(destiny => {
-//             const newData = new fuckOffs({
-//                 from: req.user.id,
-//                 to: req.params.id,
-//                 message: req.body.message,
-//                 destiny: destiny
-//             })
-//             return newData.save()
-//                 .then(data => res.status(201).json(data))
-//         .catch(error => next(error));
-// }
-
-
-    // destinyData.save()
-    //     .then(
-    //         destiny => {
-    //             res.status(201).json(destiny)
-    //             const newData = new fuckOffs({
-    //                 from: req.user.id,
-    //                 to: req.params.id,
-    //                 message: req.body.message,
-    //                 destiny: destiny.id
-    //             })
-    //             newData.save()
-    //                 .then(data => res.status(201).json(data))
-    //                 .catch(error => next(error)); //me hace falta este catch?
-    //         }
-    //     )
-    //     .catch(error => next(error));

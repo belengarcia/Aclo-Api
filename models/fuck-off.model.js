@@ -20,13 +20,15 @@ const fuckOffSchema = new mongoose.Schema({
             type: {
                 type: String,
                 enum: ['Point'],
+                default: 'Point',
                 required: true
             },
             coordinates: {
                 type: [Number],
                 required: true
             }
-        }
+        },
+        placeId: String
     }
     }, {timestamps: true,     
     toJSON: {
