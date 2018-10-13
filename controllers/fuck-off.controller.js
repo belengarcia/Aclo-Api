@@ -3,7 +3,7 @@ const destiny = require('../models/destiny.model');
 const mongoose = require('mongoose');
 const createError = require('http-errors');
 const googleApi = require('../googleApi')
-const address = require('../googleApi')
+const axios = require('axios')
 
 module.exports.list = (req, res, next) => {
     fuckOffs.find( { $or: [
@@ -14,6 +14,16 @@ module.exports.list = (req, res, next) => {
             res.json(data)
         })
         .catch(error => next(error))
+}
+
+
+module.exports.create = (req, res, next) => {
+    googleApi.generateAddress()
+   .then((data) => {
+       console.log('data', data)
+       return res.json(data).status(200);
+   })
+   .catch(err => console.error(err))
 }
 
 
@@ -33,15 +43,6 @@ module.exports.list = (req, res, next) => {
 //         .catch(error => next(error));
 // }
 
-module.exports.create = (req, res, next) => {
-
-    address;
-    console.log(address);
-
-    const destinyData = new destiny({
-        //aquí la información que cogí del api de Google
-    })
-}
 
     // destinyData.save()
     //     .then(
