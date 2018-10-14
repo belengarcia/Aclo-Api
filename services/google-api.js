@@ -34,10 +34,8 @@ module.exports.generateAddress = () => {
                     .then(destiny => {
                         return axios.get(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${destiny.placeId}&fields=photo&key=${GOOGLE_API_KEY}`)
                             .then(placeDetails => {
-                                // console.log(placeDetails.data.result)
                                 if (placeDetails.data.result.photos) {
                                     const photoRef = placeDetails.data.result.photos[0].photo_reference
-                                    console.log(photoRef);
 
                                     return axios.get(`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoRef}&key=${GOOGLE_API_KEY}`)
                                     .then(placePhoto => {

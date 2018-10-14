@@ -44,3 +44,15 @@ module.exports.create = (req, res, next) => {
         })
         .catch(err => console.error(err))    
 }
+
+module.exports.detail = (req, res, next) => {
+    fuckOffs.findById(req.params.fuckOffId)
+        .then(fuckOff => {
+            if (!fuckOff) {
+                throw createError(404, 'What that fuck are you doing?')
+            } else {
+                res.json(fuckOff);
+            }
+        })
+        .catch(error => next(error))
+}
