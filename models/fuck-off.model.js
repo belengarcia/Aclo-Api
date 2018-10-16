@@ -15,10 +15,6 @@ const fuckOffSchema = new mongoose.Schema({
         default: false
     },
     destiny: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Destiny'
-    },
-    destiny: {
         name: String,
         img: String,
         description: String,

@@ -1,27 +1,28 @@
 require('dotenv').config()
 
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const session = require('express-session');
 const passport = require('passport')
 const cors = require('cors');
 const mongoose = require('mongoose')
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
 const destinyRouter = require('./routes/destiny');
 const sessionRouter = require('./routes/sessions');
 const fuckOffRouter = require('./routes/fuck-off');
+const mailRouter = require('./routes/mail');
 
 
 require('./configs/db.configs');
 require('./configs/passport.config').setup(passport);
 const corsConfig = require('./configs/cors.config');
 
-var app = express();
+const app = express();
 
 
 app.use(logger('dev'));
@@ -45,26 +46,12 @@ app.use(passport.session());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/sessions', sessionRouter);
-app.use('/destiny', destinyRouter);
+// app.use('/destiny', destinyRouter);
 app.use('/users/:id/fuck-offs', fuckOffRouter);
-
+//app.use('/users/:id/fuck-offs', mailRouter)
 app.use(function(req, res, next) {
   next(createError(404));
 });
-
-
-
-// app.use(function(err, req, res, next) {
-//   // set locals, only providing error in development
-//   res.locals.message = err.message;
-//   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-//   // render the error page
-//   res.status(err.status || 500);
-//   const data = {}
-//   data.message = err.message;
-//   res.json(data)
-// });
 
 
 app.use(function(err, req, res, next) {
