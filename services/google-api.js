@@ -43,7 +43,7 @@ module.exports.generateAddress = () => {
                                         return Promise.resolve(destiny);
                                     })
                                 } else {
-                                    destiny.image = 'http://url-cualquiera';
+                                    destiny.image = 'https://images.unsplash.com/photo-1533066636271-fdbe3e84ad80?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=1fae158ab9dd4bc8fadc241c6037bd17&auto=format&fit=crop&w=668&q=80';
                                     return Promise.resolve(destiny);
                                 }
                             })

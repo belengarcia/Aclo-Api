@@ -10,7 +10,10 @@ const fuckOffSchema = new mongoose.Schema({
         ref: 'User'
     },
     message: String,
-    fav: false,
+    fav: {
+        type: Boolean,
+        default: false
+    },
     destiny: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Destiny'

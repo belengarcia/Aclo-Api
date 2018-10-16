@@ -1,4 +1,4 @@
-const fuckOffs = require('../models/fuck-off.model');
+const FuckOffs = require('../models/fuck-off.model');
 const destiny = require('../models/destiny.model');
 const mongoose = require('mongoose');
 const createError = require('http-errors');
@@ -6,7 +6,7 @@ const googleApi = require('../services/google-api')
 const axios = require('axios')
 
 module.exports.list = (req, res, next) => {
-    fuckOffs.find( { $or: [
+    FuckOffs.find( { $or: [
             { from : req.params.id },
             { to : req.params.id }
         ]})
@@ -24,7 +24,7 @@ module.exports.create = (req, res, next) => {
     googleApi.generateAddress()
         .then((myDestiny) => {
             console.info('(> O.;..;.O)>     ')
-            finalDestiny = new fuckOffs({
+            finalDestiny = new FuckOffs({
                 from: req.user.id,
                 to: req.params.id,
                 message: req.body.message,
@@ -46,7 +46,7 @@ module.exports.create = (req, res, next) => {
 }
 
 module.exports.detail = (req, res, next) => {
-    fuckOffs.findById(req.params.fuckOffId)
+    FuckOffs.findById(req.params.fuckOffId)
         .then(fuckOff => {
             if (!fuckOff) {
                 throw createError(404, 'What that fuck are you doing?')
@@ -55,4 +55,44 @@ module.exports.detail = (req, res, next) => {
             }
         })
         .catch(error => next(error))
+}
+
+module.exports.updateFav = (req, res, next) => {
+    
+    changes = {
+        fav: true
+    }
+    FuckOffs.findByIdAndUpdate(req.params.fuckOffId, {$set: changes}, {new: true, runValidators: true})
+        .then(fuckOff => {
+            if (!fuckOff) {
+                throw createError(404, 'I dont know what you are looking for')
+            } else {
+                res.json(fuckOff).status(201);
+            }
+        })
+        .catch(error => next(error))
+
+    // FuckOffs.findById(req.params.fuckOffId)
+    //     .then(fuckOff => {
+    //         if(!fuckOff) {
+    //             throw createError(404, 'fuckOff not found')
+    //         } else {
+    //             if(fuckOff.fav === false){
+    //                 changes = {
+    //                     fav: true
+    //                 }
+    //                 fuckOff.update(req.params.fuckOffid, {$set : changes}, { new: true, runValidators: true })
+    //                     .then(res.json(fuckOff))
+    //                     .catch(error => next (error));
+    //             } else {
+    //                 changes = {
+    //                     fav: false
+    //                 }
+    //                 fuckOff.update(req.params.fuckOffid, {$set : changes}, { new: true, runValidators: true })
+    //                 .then(res.json(fuckOff))
+    //                 .catch(error => next (error));
+    //             }
+    //         }
+    //     })
+    //     .catch(error => next(error))
 }

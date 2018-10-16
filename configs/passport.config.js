@@ -21,7 +21,7 @@ module.exports.setup = (passport) => {
         User.findOne({ mail: mail})
             .then(user => {
                 if(!user) {
-                    throw createError(401, 'Invalid email or password?');
+                    throw createError(401, 'Invalid email or password');
                 } else {
                     return user.checkPassword(password)
                     .then(match => {
