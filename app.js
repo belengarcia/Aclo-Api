@@ -15,7 +15,7 @@ const usersRouter = require('./routes/users');
 const destinyRouter = require('./routes/destiny');
 const sessionRouter = require('./routes/sessions');
 const fuckOffRouter = require('./routes/fuck-off');
-const mailRouter = require('./routes/mail');
+//const mailRouter = require('./routes/mail');
 
 
 require('./configs/db.configs');
@@ -48,11 +48,14 @@ app.use('/users', usersRouter);
 app.use('/sessions', sessionRouter);
 // app.use('/destiny', destinyRouter);
 app.use('/users/:id/fuck-offs', fuckOffRouter);
-//app.use('/users/:id/fuck-offs', mailRouter)
+//app.use('/users/:id/fuck-offs/sendMail', mailRouter)
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
+// app.get('*', function (req, res) {
+//   res.status(404).redirect('/notfound');
+// });
 
 app.use(function(err, req, res, next) {
   console.log(err);
