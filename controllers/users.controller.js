@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const User = require('../models/user.model');
+const FuckOfff = require('../models/fuck-off.model');
 const createError = require('http-errors');
 
 module.exports.create = (req, res, next) => {
@@ -17,6 +18,19 @@ module.exports.create = (req, res, next) => {
         })
         .catch(error => next(error));
 }
+
+module.exports.hatedList = (req, res, next) => {
+    FuckOfff.find({ from: req.user.id })
+        .populate('to')
+        .then((fuckoffs) => {
+            if (fuckoffs) {
+                res.json(fuckoffs.map(f => f.to));
+            } else {
+                throw createError(404, 'FuckOffs not found')
+            }
+        })
+
+    }
 
 module.exports.list = (req, res, next) => {
     User.find()

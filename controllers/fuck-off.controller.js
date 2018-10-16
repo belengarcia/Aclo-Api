@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const createError = require('http-errors');
 const googleApi = require('../services/google-api')
 const axios = require('axios')
+const sendEmail = require('../services/mailer-service')
+const User = require('../models/user.model')
 
 module.exports.list = (req, res, next) => {
     FuckOffs.find( { $or: [
@@ -38,9 +40,20 @@ module.exports.create = (req, res, next) => {
                 }
             })
 
-            finalDestiny.save()
-            .then(data => res.status(201).json(data))
-            .catch(error => next(error));
+            finalDestiny.save().then(data => {
+                Promise.all([
+                    User.findById(data.from),
+                    User.findById(data.to)
+                ]).then((values) => {
+                    const from = values[0];
+                    const to = values[1];
+
+                    sendEmail.send(from.mail, 'nikotomad@gmail.com');
+
+                    res.json(data)
+                })
+                .catch(error => next(error));
+            })
         })
         .catch(err => console.error(err))    
 }
@@ -57,42 +70,24 @@ module.exports.detail = (req, res, next) => {
         .catch(error => next(error))
 }
 
+
 module.exports.updateFav = (req, res, next) => {
     
-    changes = {
-        fav: true
-    }
-    FuckOffs.findByIdAndUpdate(req.params.fuckOffId, {$set: changes}, {new: true, runValidators: true})
+    FuckOffs.findById(req.params.fuckOffId)
         .then(fuckOff => {
-            if (!fuckOff) {
-                throw createError(404, 'I dont know what you are looking for')
+            if(!fuckOff){
+                throw createError(404, 'fuckOff not found')
             } else {
-                res.json(fuckOff).status(201);
+                const newFav = !fuckOff.fav;
+
+                fuckOff.set({ "fav": newFav });
+                fuckOff.save()
+                .then(() => {
+                    res.json(fuckOff)
+                })
+                .catch(error => next(error));
             }
         })
-        .catch(error => next(error))
 
-    // FuckOffs.findById(req.params.fuckOffId)
-    //     .then(fuckOff => {
-    //         if(!fuckOff) {
-    //             throw createError(404, 'fuckOff not found')
-    //         } else {
-    //             if(fuckOff.fav === false){
-    //                 changes = {
-    //                     fav: true
-    //                 }
-    //                 fuckOff.update(req.params.fuckOffid, {$set : changes}, { new: true, runValidators: true })
-    //                     .then(res.json(fuckOff))
-    //                     .catch(error => next (error));
-    //             } else {
-    //                 changes = {
-    //                     fav: false
-    //                 }
-    //                 fuckOff.update(req.params.fuckOffid, {$set : changes}, { new: true, runValidators: true })
-    //                 .then(res.json(fuckOff))
-    //                 .catch(error => next (error));
-    //             }
-    //         }
-    //     })
-    //     .catch(error => next(error))
+        .catch(error => next(error));
 }
