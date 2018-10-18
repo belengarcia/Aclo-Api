@@ -24,13 +24,17 @@ module.exports.hatedList = (req, res, next) => {
         .populate('to')
         .then((fuckoffs) => {
             if (fuckoffs) {
-                res.json(fuckoffs.map(f => f.to));
+                const hated = fuckoffs
+                    .map(f => f.to)
+                    .filter((to, i, arr) => arr.indexOf(to) === i);
+
+                res.json(hated);
             } else {
                 throw createError(404, 'FuckOffs not found')
             }
         })
-
-    }
+        .catch(error => next(error));
+}
 
 module.exports.list = (req, res, next) => {
     User.find()
@@ -93,4 +97,6 @@ module.exports.update = (req, res, next) => {
         })
         .catch(error => next(error))
 }
+
+
 

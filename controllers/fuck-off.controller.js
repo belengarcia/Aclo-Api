@@ -47,9 +47,9 @@ module.exports.create = (req, res, next) => {
                 ]).then((values) => {
                     const from = values[0];
                     const to = values[1];
-
-                    sendEmail.send(from.mail, 'nikotomad@gmail.com');
-
+                    if (from.mail != to.mail){
+                        sendEmail.send(from.mail, to.mail, data, from, to);
+                    }
                     res.json(data)
                 })
                 .catch(error => next(error));

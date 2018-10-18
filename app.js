@@ -48,8 +48,7 @@ app.use('/users', usersRouter);
 app.use('/sessions', sessionRouter);
 // app.use('/destiny', destinyRouter);
 app.use('/users/:id/fuck-offs', fuckOffRouter);
-//app.use('/users/:id/fuck-offs/sendMail', mailRouter)
-app.use(function(req, res, next) {
+app.use( function(req, res, next) {
   next(createError(404));
 });
 

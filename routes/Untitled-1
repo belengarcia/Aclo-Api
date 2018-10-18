@@ -1,6 +1,0 @@
-FuckOff.aggregate([{
-    $group: {
-        _id: '$from',
-        count: {$sum: 1}
-    }
-}]).then((result) => res.json(result))
