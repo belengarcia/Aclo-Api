@@ -16,7 +16,10 @@ module.exports.ranking = (req, res, next) => {
             if(err) {
                 next(error)
             }
-            res.json(ranks)
+            console.log(ranks)
+            const champions = ranks.sort(compare)
+            console.log(champions)
+            res.json(champions)
           })
       })
 }
@@ -30,3 +33,21 @@ module.exports.stats = (req, res, next) => {
                         'day': { '$dayOfMonth': "$createdAt" }}}}
       ]).then((result) => res.json(result))
 }
+
+function compare (a, b) {
+    if(a.count < b.count) {
+        return 1;
+    }
+    if(a.count > b.count){
+        return -1;
+    }
+}
+
+
+// function compare(a,b) {
+//   if (a.last_nom < b.last_nom)
+//     return -1;
+//   if (a.last_nom > b.last_nom)
+//     return 1;
+//   return 0;
+// }
