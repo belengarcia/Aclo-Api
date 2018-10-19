@@ -17,7 +17,6 @@ module.exports.ranking = (req, res, next) => {
                 next(error)
             }
             const champions = ranks.sort(compare)
-            console.log(champions)
             res.json(champions)
           })
       })
