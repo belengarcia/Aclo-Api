@@ -12,10 +12,10 @@ const mongoose = require('mongoose')
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const destinyRouter = require('./routes/destiny');
+// const destinyRouter = require('./routes/destiny');
 const sessionRouter = require('./routes/sessions');
 const fuckOffRouter = require('./routes/fuck-off');
-//const mailRouter = require('./routes/mail');
+const statsRouter = require('./routes/stats')
 
 
 require('./configs/db.configs');
@@ -48,6 +48,7 @@ app.use('/users', usersRouter);
 app.use('/sessions', sessionRouter);
 // app.use('/destiny', destinyRouter);
 app.use('/users/:id/fuck-offs', fuckOffRouter);
+app.use('/users/:id/stats', statsRouter);
 app.use( function(req, res, next) {
   next(createError(404));
 });
