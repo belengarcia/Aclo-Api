@@ -52,6 +52,12 @@ let users = [{
     mail: 'ramsay@bolton.com',
     password: '12345678',
     role: 'user'
+}, {
+    name: 'Sansa Stark',
+    profilePic: 'https://img.europapress.es/fotoweb/fotonoticia_20180307162430_640.jpg',
+    mail: 'sansa@stark.com',
+    password: '12345678',
+    role: 'user' 
 } ]
 
 
