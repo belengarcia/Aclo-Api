@@ -9,6 +9,7 @@ let transporter = nodemailer.createTransport({
 });
 
 module.exports.send = (fromEmail, toEmail, data, from, to) => {
+  
     transporter.sendMail({
       from: fromEmail,
       to: toEmail, 

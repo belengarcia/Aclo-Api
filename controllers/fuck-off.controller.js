@@ -29,7 +29,7 @@ module.exports.create = (req, res, next) => {
             finalDestiny = new FuckOffs({
                 from: req.user.id,
                 to: req.params.id,
-                message: req.body.message,
+                message: req.body.message, //para un futuro poder añadir mns personalizado
                 destiny: {
                     name: myDestiny.name,
                     img: myDestiny.image,
@@ -47,6 +47,7 @@ module.exports.create = (req, res, next) => {
                 ]).then((values) => {
                     const from = values[0];
                     const to = values[1];
+                    console.log('email service, FROM: ', from)
                     if (from.mail != to.mail){
                         sendEmail.send(from.mail, to.mail, data, from, to);
                     }

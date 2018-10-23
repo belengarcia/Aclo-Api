@@ -25,6 +25,7 @@ module.exports.generateAddress = () => {
         .then(response => {
             if( response.data.results[0]) {
                 const place = response.data.results[0];
+                console.log('GoogleApi 1A CALL: ', response.data.results[0])
                 const destiny = new Destiny(
                     place.place_id,
                     place.formatted_address,
@@ -39,7 +40,7 @@ module.exports.generateAddress = () => {
 
                                     return axios.get(`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoRef}&key=${GOOGLE_API_KEY}`)
                                     .then(placePhoto => {
-                                        destiny.image = placePhoto.config.url;
+                                        destiny.image = placePhoto.config.url; //cambiar esto aqui y en el modelo por un array
                                         return Promise.resolve(destiny);
                                     })
                                 } else {

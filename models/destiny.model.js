@@ -3,7 +3,7 @@ class Destiny {
         this.placeId = placeId;
         this.name = name;
         this.coordinates = coordinates;
-        this.image = image;
+        this.image = image; //cambiar esto por un array
     }
 }
 
