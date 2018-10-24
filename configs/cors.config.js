@@ -5,7 +5,7 @@ const originsAllowed = process.env.CORS_ORIGINS || [
   
   module.exports = {
     origin: function(origin, next) {
-      const allowed = process.env.CORS_ORIGINS;
+      const allowed = !origin || originsAllowed.indexOf(origin) !== -1;
       if (allowed) {
         next(null, allowed);
       } else {

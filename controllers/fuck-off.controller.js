@@ -25,14 +25,14 @@ module.exports.create = (req, res, next) => {
     let finalDestiny = {};
     googleApi.generateAddress()
         .then((myDestiny) => {
-            console.info('(> O.;..;.O)>     ')
+            console.info('(> O.;..;.O)>     ', myDestiny)
             finalDestiny = new FuckOffs({
                 from: req.user.id,
                 to: req.params.id,
                 message: req.body.message, //para un futuro poder añadir mns personalizado
                 destiny: {
                     name: myDestiny.name,
-                    img: myDestiny.image,
+                    img: myDestiny.images,
                     placeId: myDestiny.placeId,
                     location: {
                         coordinates: Object.values(myDestiny.coordinates)
