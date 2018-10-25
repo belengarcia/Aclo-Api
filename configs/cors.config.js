@@ -14,4 +14,3 @@ const originsAllowed = process.env.CORS_ORIGINS || [
     },
     credentials: true
   }
-  // !origin || originsAllowed.indexOf(origin) !== -1
