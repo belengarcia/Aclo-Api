@@ -1,9 +1,9 @@
 class Destiny {
-    constructor(placeId, name, coordinates = [], image = '') {
+    constructor(placeId, name, coordinates = [], images = []) {
         this.placeId = placeId;
         this.name = name;
         this.coordinates = coordinates;
-        this.image = image; //cambiar esto por un array
+        this.images = images; 
     }
 }
 
