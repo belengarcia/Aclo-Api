@@ -10,17 +10,16 @@ const passport = require('passport')
 const cors = require('cors');
 const mongoose = require('mongoose')
 
+require('./configs/db.configs');
+require('./configs/passport.config').setup(passport);
+const corsConfig = require('./configs/cors.config');
+
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 // const destinyRouter = require('./routes/destiny'); para los fake destinies
 const sessionRouter = require('./routes/sessions');
 const fuckOffRouter = require('./routes/fuck-off');
 const statsRouter = require('./routes/stats')
-
-
-require('./configs/db.configs');
-require('./configs/passport.config').setup(passport);
-const corsConfig = require('./configs/cors.config');
 
 const app = express();
 
@@ -43,12 +42,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header("Access-Control-Allow-Origin", "https://belengarcia.github.io");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -56,13 +49,10 @@ app.use('/sessions', sessionRouter);
 // app.use('/destiny', destinyRouter);
 app.use('/users/:id/fuck-offs', fuckOffRouter);
 app.use('/users/:id/stats', statsRouter);
+
 app.use( function(req, res, next) {
   next(createError(404));
 });
-
-// app.get('*', function (req, res) {
-//   res.status(404).redirect('/notfound');
-// });
 
 app.use(function(err, req, res, next) {
   console.log(err);
