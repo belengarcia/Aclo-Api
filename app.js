@@ -24,7 +24,7 @@ const statsRouter = require('./routes/stats')
 const app = express();
 
 var whitelist = [
-  '*',
+  'https://belengarcia.github.io/',
 ];
 
 var corsOptions = {
