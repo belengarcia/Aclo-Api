@@ -58,10 +58,6 @@ app.use( function(req, res, next) {
   next(createError(404));
 });
 
-app.use((req, res, next) => {
-  res.sendfile(__dirname + '/public/index.html');
-});
-
 
 app.use(function(err, req, res, next) {
   console.log(err);
