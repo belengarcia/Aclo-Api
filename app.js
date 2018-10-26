@@ -23,6 +23,18 @@ const statsRouter = require('./routes/stats')
 
 const app = express();
 
+var whitelist = [
+  '*',
+];
+
+var corsOptions = {
+  origin: function(origin, callback){
+      var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
+      callback(null, originIsWhitelisted);
+  },
+  credentials: true
+};
+app.use(cors(corsOptions));
 
 app.use(logger('dev'));
 app.use(express.json());
