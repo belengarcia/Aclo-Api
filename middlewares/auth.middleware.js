@@ -18,7 +18,6 @@ module.exports.checkRole = (role) => {
     }
   }
 
-//preguntar aquí el por qué del param
 module.exports.isMe = (param = 'id') => {
     return (req, res, next) => {
       const user_id = req.params[param];

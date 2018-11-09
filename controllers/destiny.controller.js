@@ -21,7 +21,7 @@ module.exports.get = (req, res, next) => {
 }
 
 module.exports.create = (req, res, next) => {
-    //averiguar cómo pasar el req.body!!
+
     const destiny = new Destiny(req.body);
 
     if(req.files){

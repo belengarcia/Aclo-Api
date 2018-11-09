@@ -36,18 +36,12 @@ module.exports.generateAddress = () => {
                         return axios.get(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${destiny.placeId}&fields=photo&key=${GOOGLE_API_KEY}`)
                             .then(placeDetails => {
                                 if (placeDetails.data.result.photos) {
-                                    // let arrayPhotoRefs = []
-                                    // for (i=0; i< placeDetails.data.result.photos.length ; i++){
-                                    //     arrayPhotoRefs.push(placeDetails.data.result.photos[i].photo_reference)
-                                    // }
-                                    const photoRef = placeDetails.data.result.photos[0].photo_reference
 
-                                    //ahora tendría que hacer el axios.get por cada uno de los elementos de mi array "arrayPhotoRefs" y no se cómo hacerlo. 
-                                    // Si quito el return no termina nunca la petición, pero no puedo ponerlo por cada elemento del array porque solo cumpliría el primero no?
+                                    const photoRef = placeDetails.data.result.photos[0].photo_reference
 
                                     return axios.get(`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoRef}&key=${GOOGLE_API_KEY}`)
                                     .then(placePhoto => {
-                                        destiny.images = placePhoto.config.url; //cambiar esto aqui y en el modelo por un array
+                                        destiny.images = placePhoto.config.url;
                                         return Promise.resolve(destiny);
                                     })
                                 } else {
