@@ -49,7 +49,7 @@ module.exports.create = (req, res, next) => {
                     const to = values[1];
                     console.log('email service, FROM: ', from)
                     if (from.mail != to.mail){
-                        sendEmail.send(from.mail, to.mail, data, from, to);
+                        sendEmail.send(data, from, to);
                     }
                     res.json(data)
                 })

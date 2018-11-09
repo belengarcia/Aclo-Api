@@ -8,11 +8,11 @@ let transporter = nodemailer.createTransport({
   }
 });
 
-module.exports.send = (fromEmail, toEmail, data, from, to) => {
+module.exports.send = (data, from, to) => {
   
     transporter.sendMail({
-      from: fromEmail,
-      to: toEmail, 
+      from: from.mail,
+      to: to.mail, 
       subject: 'Better you to fuck off',
       html: `
       <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
