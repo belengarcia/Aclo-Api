@@ -26,6 +26,7 @@ module.exports.create = (req, res, next) => {
         .then((myDestiny) => {
             console.info('(> O.;..;.O)>     ')
             //this if can be done cleaner FOR SURE
+            console.log(req)
             if (req.body.outsider){
                 finalDestiny = new FuckOffs({
                     from: req.user.id,
