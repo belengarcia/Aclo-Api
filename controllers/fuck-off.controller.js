@@ -27,7 +27,6 @@ module.exports.create = (req, res, next) => {
             console.info('(> O.;..;.O)>     ')
             //this if can be done cleaner FOR SURE
             if (req.body.outsider){
-                console.log('IN en req.body')
                 finalDestiny = new FuckOffs({
                     from: req.user.id,
                     outsider: req.body.outsider,
@@ -41,7 +40,6 @@ module.exports.create = (req, res, next) => {
                         }
                     }
                 })
-                console.log('FUCKOFF: ', finalDestiny);
             } else {
                 finalDestiny = new FuckOffs({
                     from: req.user.id,
@@ -60,12 +58,10 @@ module.exports.create = (req, res, next) => {
 
             finalDestiny.save().then(data => {
                 if(req.body.outsider){
-                    console.log('entra en outsider')
                     User.findById(data.from)
                     .then((user)=> {
                         const from = user;
                         const to = data.outsider;
-                        console.log('email service, FROM: ', to)
                         if (from.mail != data.outsider){
                             sendEmail.send(data, from, to);
                         }
@@ -73,14 +69,12 @@ module.exports.create = (req, res, next) => {
                     })
                     .catch(error => next(error));
                 } else {
-                    console.log('entra en ID')
                     Promise.all([
                         User.findById(data.from),
                         User.findById(data.to)
                     ]).then((values) => {
                         const from = values[0];
                         const to = values[1];
-                        console.log('email service, FROM: ', from)
                         if (from.mail != to.mail){
                             sendEmail.send(data, from, to);
                         }
