@@ -26,11 +26,11 @@ module.exports.create = (req, res, next) => {
         .then((myDestiny) => {
             console.info('(> O.;..;.O)>     ')
             //this if can be done cleaner FOR SURE
-            if (req.body.to){
+            if (req.body.outsider){
                 console.log('IN en req.body')
                 finalDestiny = new FuckOffs({
                     from: req.user.id,
-                    to: req.body.to,
+                    outsider: req.body.outsider,
                     message: req.body.message, //para un futuro poder añadir mns personalizado
                     destiny: {
                         name: myDestiny.name,
@@ -59,14 +59,14 @@ module.exports.create = (req, res, next) => {
             }
 
             finalDestiny.save().then(data => {
-                if(typeof data.to !== Object){
-                    console.log('entra en string')
+                if(req.body.outsider){
+                    console.log('entra en outsider')
                     User.findById(data.from)
                     .then((user)=> {
-                        const from = user.mail;
-                        const to = data.to;
+                        const from = user;
+                        const to = data.outsider;
                         console.log('email service, FROM: ', to)
-                        if (from.mail != to){
+                        if (from.mail != data.outsider){
                             sendEmail.send(data, from, to);
                         }
                         res.json(data)

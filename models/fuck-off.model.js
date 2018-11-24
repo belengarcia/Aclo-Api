@@ -6,10 +6,10 @@ const fuckOffSchema = new mongoose.Schema({
         ref: 'User'
     },
     to: {
-        type: mongoose.Schema.Types.Mixed
-        //mongoose.Schema.Types.ObjectId,
-        //ref: 'User'
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     },
+    outsider: String,
     message: String,
     fav: {
         type: Boolean,

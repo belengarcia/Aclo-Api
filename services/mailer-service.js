@@ -12,6 +12,7 @@ module.exports.send = (data, from, to) => {
   console.log(to)
     if(!to.mail){
     console.log('entra en to normal')
+    console.log(from)
     transporter.sendMail({
       from: from.mail,
       to: to, 
