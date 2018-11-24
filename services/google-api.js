@@ -25,7 +25,6 @@ module.exports.generateAddress = () => {
         .then(response => {
             if( response.data.results[0]) {
                 const place = response.data.results[0];
-                console.log('GoogleApi 1A CALL: ', response.data.results[0])
                 const destiny = new Destiny(
                     place.place_id,
                     place.formatted_address,
@@ -45,7 +44,6 @@ module.exports.generateAddress = () => {
                                         return Promise.resolve(destiny);
                                     })
                                 } else {
-
                                     let fakeImages = [
                                         'https://images.unsplash.com/photo-1533066636271-fdbe3e84ad80?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=1fae158ab9dd4bc8fadc241c6037bd17&auto=format&fit=crop&w=668&q=80',
                                         'https://images.unsplash.com/photo-1523307143330-919ae48363c6?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=26d35979b196bcbca08676dc6b2eccf6&auto=format&fit=crop&w=804&q=80',
