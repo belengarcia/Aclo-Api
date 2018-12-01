@@ -10,6 +10,7 @@ module.exports.create = (req, res, next) => {
             if (user) {
                 throw createError(409, `User with email ${req.body.mail} already is registered`)
             } else {
+                console.log(req.body)
                 user = new User(req.body);
                 user.save()
                     .then(user => res.status(201).json(user))
