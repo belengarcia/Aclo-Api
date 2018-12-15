@@ -27,62 +27,33 @@ module.exports.create = (req, res, next) => {
             console.info('(> O.;..;.O)>     ')
             //this if can be done cleaner FOR SURE
             console.log(req.body)
-            if (req.body.outsider){
-                finalDestiny = new FuckOffs({
-                    from: req.user.id,
-                    outsider: req.body.outsider,
-                    message: req.body.message, //para un futuro poder añadir mns personalizado
-                    destiny: {
-                        name: myDestiny.name,
-                        img: myDestiny.images,
-                        placeId: myDestiny.placeId,
-                        location: {
-                            coordinates: Object.values(myDestiny.coordinates)
-                        }
+            finalDestiny = new FuckOffs({
+                from: req.user.id,
+                to: req.params.id,
+                message: req.body.message, //para un futuro poder añadir mns personalizado
+                destiny: {
+                    name: myDestiny.name,
+                    img: myDestiny.images,
+                    placeId: myDestiny.placeId,
+                    location: {
+                        coordinates: Object.values(myDestiny.coordinates)
                     }
-                })
-            } else {
-                finalDestiny = new FuckOffs({
-                    from: req.user.id,
-                    to: req.params.id,
-                    message: req.body.message, //para un futuro poder añadir mns personalizado
-                    destiny: {
-                        name: myDestiny.name,
-                        img: myDestiny.images,
-                        placeId: myDestiny.placeId,
-                        location: {
-                            coordinates: Object.values(myDestiny.coordinates)
-                        }
-                    }
-                })
-            }
-
-            finalDestiny.save().then(data => {
-                if(req.body.outsider){
-                    User.findById(data.from)
-                    .then((user)=> {
-                        const from = user;
-                        const to = data.outsider;
-                        if (from.mail != data.outsider){
-                            sendEmail.send(data, from, to);
-                        }
-                        res.json(data)
-                    })
-                    .catch(error => next(error));
-                } else {
-                    Promise.all([
-                        User.findById(data.from),
-                        User.findById(data.to)
-                    ]).then((values) => {
-                        const from = values[0];
-                        const to = values[1];
-                        if (from.mail != to.mail){
-                            sendEmail.send(data, from, to);
-                        }
-                        res.json(data)
-                    })
-                    .catch(error => next(error));
                 }
+            })
+            
+            finalDestiny.save().then(data => { 
+                Promise.all([
+                    User.findById(data.from),
+                    User.findById(data.to)
+                ]).then((values) => {
+                    const from = values[0];
+                    const to = values[1];
+                    if (from.mail != to.mail){
+                        sendEmail.send(data, from, to);
+                    }
+                    res.json(data)
+                })
+                .catch(error => next(error));
             })
         })
         .catch(err => console.error(err))    
