@@ -10,7 +10,6 @@ let transporter = nodemailer.createTransport({
 
 module.exports.send = (data, from, to) => {
   if(!data.outsider){
-    console.log('inside: !outsider' )
     transporter.sendMail({
       from: from.mail,
       to: to.mail, 

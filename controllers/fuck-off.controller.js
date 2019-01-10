@@ -62,7 +62,6 @@ module.exports.createOutsider = (req, res, next) => {
     googleApi.generateAddress()
     .then((outsiderDestiny) => {
         console.info('OUT(> O.;..;.O)>     ')
-        console.log(req.body)
         finalDestiny = new FuckOffs({
             from: req.user.id,
             outsider: req.body.outsider,
