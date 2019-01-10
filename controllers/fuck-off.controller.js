@@ -25,8 +25,6 @@ module.exports.create = (req, res, next) => {
     googleApi.generateAddress()
         .then((myDestiny) => {
             console.info('(> O.;..;.O)>     ')
-            //this if can be done cleaner FOR SURE
-            console.log(req.body)
             finalDestiny = new FuckOffs({
                 from: req.user.id,
                 to: req.params.id,
@@ -58,6 +56,42 @@ module.exports.create = (req, res, next) => {
         })
         .catch(err => console.error(err))    
 }
+
+module.exports.createOutsider = (req, res, next) => {
+    let finalDestiny = {};
+    googleApi.generateAddress()
+    .then((outsiderDestiny) => {
+        console.info('OUT(> O.;..;.O)>     ')
+        finalDestiny = new FuckOffs({
+            from: req.user.id,
+            outsider: req.body.outsider,
+            message: req.body.message, //para un futuro poder añadir mns personalizado
+            destiny: {
+                name: outsiderDestiny.name,
+                img: outsiderDestiny.images,
+                placeId: outsiderDestiny.placeId,
+                location: {
+                    coordinates: Object.values(outsiderDestiny.coordinates)
+                }
+            }
+        })
+        
+        finalDestiny.save().then(data => { 
+            User.findById(data.from)
+            .then((user) => {
+                const from = user;
+                const to = data.outsider;
+                if (from != to){
+                    sendEmail.send(data, user, to);
+                }
+                res.json(data)
+            })
+            .catch(error => next(error));
+        })
+    })
+    .catch(err => console.error(err)) 
+}
+
 module.exports.detail = (req, res, next) => {
     FuckOffs.findById(req.params.fuckOffId)
         .then(fuckOff => {
